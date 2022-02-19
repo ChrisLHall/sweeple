@@ -4,20 +4,36 @@ currentRow = [];
 mineArray = [];
 distanceField = [];
 
+function slotIndexToRow(slotIndex) {
+	return floor(slotIndex / COLS);
+}
 
+function slotIndexToCol(slotIndex) {
+	return slotIndex mod COLS;
+}
+
+function rowColToSlotIndex(row, col) {
+	return row * COLS + col;
+}
+
+// oops previousRow should now be like previousGrid or something like that
 function newRowOfButtons() {
 	var previousRow = noone;
 	if (array_length(currentRow) > 0) {
 		previousRow = currentRow;
 		array_push(previousRows, currentRow);
-		y += 48;
+		y += 8 + 32 * ROWS;
 	}
-	currentRow = makeSweeperRow(x, y, 32, SLOTS);
+	currentRow = makeSweeperRow(x, y, 32);
 	if (previousRow != noone) {
 		for (var i = 0; i < SLOTS; i++) {
 			// copy color state and text, and lock non-mines
 			//currentRow[i].TEXT = previousRow[i].TEXT;
 			//currentRow[i].image_blend = previousRow[i].image_blend;
+			// todo check mines better than hardcoded color
+			if (previousRow[i].image_blend == c_green) {
+				currentRow[i].image_blend = c_green;
+			}
 			if (previousRow[i].LOCKED) {
 				currentRow[i].LOCKED = true;
 				currentRow[i].image_blend = c_dkgray;
@@ -44,17 +60,13 @@ function createMineArray(slots, mineCount) {
 
 // create a distance field of an array of mines. Each cell contains a number which is the distance from the closest mine
 function createDistanceField(mineArray) {
-	var result = array_create(array_length(mineArray));
-	for (var i = 0; i < array_length(result); i++) {
+	var result = array_create(SLOTS);
+	for (var i = 0; i < SLOTS; i++) {
 		var closestDistance = 1000;
-		for (var j = 0; j < array_length(mineArray); j++) {
+		for (var j = 0; j < SLOTS; j++) {
 			if (mineArray[j] == 1) {
-				var dist = abs(j - i);
-				if (WRAP_DISTANCE) {
-					var edge_dist = abs(i + SLOTS - j);
-					var edge_dist_2 = abs(j + SLOTS - i);
-					dist = min(dist, min(edge_dist, edge_dist_2));
-				}
+				// taxicab distance
+				var dist = abs(slotIndexToRow(i) - slotIndexToRow(j)) + abs(slotIndexToCol(i) - slotIndexToCol(j));
 				if (dist < closestDistance) {
 					closestDistance = dist;
 				}
@@ -65,11 +77,19 @@ function createDistanceField(mineArray) {
 	return result;
 }
 
+// old distance field (1d) function
+/* var dist = abs(j - i);
+				if (WRAP_DISTANCE) {
+					var edge_dist = abs(i + SLOTS - j);
+					var edge_dist_2 = abs(j + SLOTS - i);
+					dist = min(dist, min(edge_dist, edge_dist_2));
+				} */
 
-function makeSweeperRow(startX, startY, spacing, count) {
-	var result = array_create(count);
-	for (var i = 0; i < count; i++) {
-		result[i] = instance_create_layer(startX + i * spacing, startY, "Instances", oSweeperIcon);
+
+function makeSweeperRow(startX, startY, spacing) {
+	var result = array_create(SLOTS);
+	for (var i = 0; i < SLOTS; i++) {
+		result[i] = instance_create_layer(startX + slotIndexToCol(i) * spacing, startY + slotIndexToRow(i) * spacing, "Instances", oSweeperIcon);
 	}
 	return result;	
 }
@@ -190,7 +210,9 @@ function hasGameStarted() {
 // TODO when to randomize
 randomize();
 // TODO values
-SLOTS = irandom_range(MIN_SLOTS, MAX_SLOTS);
+ROWS = irandom_range(MIN_ROWS, MAX_ROWS);
+COLS = irandom_range(MIN_COLS, MAX_COLS);
+SLOTS = ROWS * COLS;
 MINES = max(2, irandom_range(SLOTS * MIN_DENSITY, SLOTS * MAX_DENSITY));
 
 mineArray = createMineArray(SLOTS, MINES);
