@@ -10,9 +10,9 @@ function newRowOfButtons() {
 	if (array_length(currentRow) > 0) {
 		previousRow = currentRow;
 		array_push(previousRows, currentRow);
-		y += 80;
+		y += 48;
 	}
-	currentRow = makeSweeperRow(x, y, 64, SLOTS);
+	currentRow = makeSweeperRow(x, y, 32, SLOTS);
 	if (previousRow != noone) {
 		for (var i = 0; i < SLOTS; i++) {
 			// copy color state and text, and lock non-mines
@@ -191,7 +191,7 @@ function hasGameStarted() {
 randomize();
 // TODO values
 SLOTS = irandom_range(MIN_SLOTS, MAX_SLOTS);
-MINES = irandom_range(SLOTS * MIN_DENSITY, SLOTS * MAX_DENSITY);
+MINES = max(2, irandom_range(SLOTS * MIN_DENSITY, SLOTS * MAX_DENSITY));
 
 mineArray = createMineArray(SLOTS, MINES);
 distanceField = createDistanceField(mineArray);
