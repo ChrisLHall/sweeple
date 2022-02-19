@@ -2158,7 +2158,7 @@
     "path": "folders/Fonts.yy",
   },
   "resourceVersion": "1.0",
-  "name": "fFont",
+  "name": "fInfoText",
   "tags": [],
   "resourceType": "GMFont",
 }
