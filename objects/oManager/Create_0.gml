@@ -10,16 +10,17 @@ function newRowOfButtons() {
 	if (array_length(currentRow) > 0) {
 		previousRow = currentRow;
 		array_push(previousRows, currentRow);
-		y += 64;
+		y += 80;
 	}
 	currentRow = makeSweeperRow(x, y, 64, SLOTS);
 	if (previousRow != noone) {
 		for (var i = 0; i < SLOTS; i++) {
 			// copy color state and text, and lock non-mines
-			currentRow[i].TEXT = previousRow[i].TEXT;
-			currentRow[i].image_blend = previousRow[i].image_blend;
-			if (previousRow[i].CONFIRMED && previousRow[i].TEXT != "" && mineArray[i] == 0) {
-				currentRow[i].CONFIRMED = true;
+			//currentRow[i].TEXT = previousRow[i].TEXT;
+			//currentRow[i].image_blend = previousRow[i].image_blend;
+			if (previousRow[i].LOCKED) {
+				currentRow[i].LOCKED = true;
+				currentRow[i].image_blend = c_dkgray;
 			}
 		}
 	}
@@ -84,6 +85,21 @@ function checkNumberOfPokes() {
 	return total;
 }
 
+// ensure that if you are playing hard mode, you must click bombs you clicked before
+function checkHardModeRule() {
+	if (!oHardModeCheckBox.HARDMODE or array_length(previousRows) == 0) {
+		return true;
+	}
+	var mostRecentRow = previousRows[array_length(previousRows) - 1];
+	// if there was a bomb there must be a poke
+    for (var i = 0; i < SLOTS; i++) {
+		if (mostRecentRow[i].image_index == 3 and currentRow[i].image_index != 2) {
+			return false;
+		}
+	}
+	return true;
+}
+
 // recall that image_index 0 is blank, 1 is flag, 2 is poke
 // score the whole thing if 
 function scoreCurrentRow() {
@@ -122,12 +138,13 @@ function reveal(index) {
 	icon.REVEALED = true;
 	icon.CONFIRMED = true;
 	if (mineArray[index] == 1) {
-		// TODO you lose!
 		icon.image_blend = c_green;
 		icon.image_index = 3;
 	} else {
+		icon.image_index = 0;
 		icon.image_blend = c_aqua;
 		icon.TEXT = string(distanceField[index]);
+		icon.LOCKED = true;
 	}
 }
 
@@ -146,7 +163,9 @@ function revealRandomNonMine(){
 // called by oGoButton
 // TODO maybe force you to poke at least one mine
 function goButtonPressed() {
-	if (checkNumberOfPokes() == MINES) {
+	if (!checkHardModeRule()) {
+		oInfoText.showInfoText("In hard mode, you must choose every bomb you found before.");
+	} else if (checkNumberOfPokes() == MINES) {
 		oInfoText.showInfoText("");
 		if (entireRowCorrect()) {
 			showCorrectRow();
@@ -162,6 +181,10 @@ function goButtonPressed() {
 	} else {
 		oInfoText.showInfoText("Choose exactly " + string(MINES) + " squares.");
 	}
+}
+
+function hasGameStarted() {
+	return array_length(previousRows) > 0;
 }
 
 // TODO when to randomize
