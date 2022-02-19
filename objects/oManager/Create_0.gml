@@ -32,12 +32,12 @@ function newRowOfButtons() {
 			//currentRow[i].TEXT = previousRow[i].TEXT;
 			//currentRow[i].image_blend = previousRow[i].image_blend;
 			// todo check mines better than hardcoded color
-			if (previousRow[i].image_blend == c_green) {
-				currentRow[i].image_blend = c_green;
+			if (previousRow[i].image_blend == oColorScheme.FOUND_BOMB) {
+				currentRow[i].image_blend = oColorScheme.FOUND_BOMB;
 			}
 			if (previousRow[i].LOCKED) {
 				currentRow[i].LOCKED = true;
-				currentRow[i].image_blend = c_dkgray;
+				currentRow[i].image_blend = oColorScheme.LOCKED;
 			}
 		}
 	}
@@ -150,7 +150,7 @@ function showCorrectRow() {
 		currentRow[i].image_index = (mineArray[i] == 1) ? 3 : 0;
 		currentRow[i].TEXT = "";
 		// TODO pick some real colors
-		currentRow[i].image_blend = c_green;
+		currentRow[i].image_blend = oColorScheme.FOUND_BOMB;
 	}
 }
 
@@ -159,11 +159,16 @@ function reveal(index) {
 	icon.REVEALED = true;
 	icon.CONFIRMED = true;
 	if (mineArray[index] == 1) {
-		icon.image_blend = c_green;
+		icon.image_blend = oColorScheme.FOUND_BOMB;
 		icon.image_index = 3;
 	} else {
 		icon.image_index = 0;
-		icon.image_blend = c_aqua;
+		// color based on distance
+		if (distanceField[index] <= 2) {
+			icon.image_blend = oColorScheme.CLOSE_DISTANCE;
+		} else {
+			icon.image_blend = oColorScheme.FAR_DISTANCE;
+		}
 		icon.TEXT = string(distanceField[index]);
 		icon.LOCKED = true;
 	}
