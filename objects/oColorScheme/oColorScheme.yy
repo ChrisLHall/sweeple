@@ -20,7 +20,7 @@
   "eventList": [],
   "properties": [
     {"varType":7,"value":"$FF771764","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"BLANK","tags":[],"resourceType":"GMObjectProperty",},
-    {"varType":7,"value":"$FF4CE514","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"FOUND_BOMB","tags":[],"resourceType":"GMObjectProperty",},
+    {"varType":7,"value":"$FF3CB211","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"FOUND_BOMB","tags":[],"resourceType":"GMObjectProperty",},
     {"varType":7,"value":"$FF00FFFF","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"CLOSE_DISTANCE","tags":[],"resourceType":"GMObjectProperty",},
     {"varType":7,"value":"$FF1E8EFF","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"FAR_DISTANCE","tags":[],"resourceType":"GMObjectProperty",},
     {"varType":7,"value":"$FF676767","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"LOCKED","tags":[],"resourceType":"GMObjectProperty",},
