@@ -3,6 +3,7 @@ previousRows = [];
 currentRow = [];
 mineArray = [];
 distanceField = [];
+turns = 0;
 
 function slotIndexToRow(slotIndex) {
 	return floor(slotIndex / COLS);
@@ -187,11 +188,12 @@ function goButtonPressed() {
 		oInfoText.showInfoText("In hard mode, you must choose every bomb you found before.");
 	} else if (checkNumberOfPokes() == MINES) {
 		oInfoText.showInfoText("");
+		turns++;
 		if (entireRowCorrect()) {
 			showCorrectRow();
 			// hack
 			instance_destroy(oGoButton);
-			oInfoText.showInfoText("Great job! " + string(array_length(previousRows) + 1) + " guesses.");
+			oInfoText.showInfoText("Great job! You won in " + string(turns) + " turns.");
 		} else {
 			// first score the existing line
 			scoreCurrentRow()
