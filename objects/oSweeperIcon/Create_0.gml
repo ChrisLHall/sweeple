@@ -5,5 +5,5 @@ image_blend = oColorScheme.BLANK;
 // image index 0 is blank/text, 1 is flag, 2 is poke, 3 is bomb
 
 
-image_xscale = 2;
-image_yscale = 2;
+image_xscale = 4;
+image_yscale = 4;

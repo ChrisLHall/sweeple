@@ -23,9 +23,10 @@ function newRowOfButtons() {
 	if (array_length(currentRow) > 0) {
 		previousRow = currentRow;
 		array_push(previousRows, currentRow);
-		y += 8 + 32 * ROWS;
+		y += 8 + (GRID_SIZE + PADDING) * ROWS;
 	}
-	currentRow = makeSweeperRow(x, y, 32);
+	var totalGridWidth = (GRID_SIZE + PADDING) * (COLS - 1);
+	currentRow = makeSweeperRow((room_width - totalGridWidth) / 2, GRID_SIZE / 2 + PADDING, (GRID_SIZE + PADDING));
 	if (previousRow != noone) {
 		for (var i = 0; i < SLOTS; i++) {
 			// copy color state and text, and lock non-mines
@@ -126,8 +127,8 @@ function checkHardModeRule() {
 function scoreCurrentRow() {
 	for (var i = 0; i < SLOTS; i++) {
 		var icon = currentRow[i];
-		icon.CONFIRMED = true;
-		if (icon.image_index != 0) {
+		//icon.CONFIRMED = true;
+		if (icon.image_index == 2) {
 			reveal(i);
 		}
 	}
@@ -136,8 +137,8 @@ function scoreCurrentRow() {
 function entireRowCorrect() {
 	var allCorrect = true;
 	for (var i = 0; i < SLOTS; i++) {
-		var correctImage = (mineArray[i] == 1) ? 2 : 0;
-		if (currentRow[i].image_index != correctImage) {
+		// checking XOR because they need to both be true or both be false
+		if (currentRow[i].image_index == 2 xor mineArray[i] == 1) {
 			allCorrect = false;
 			break;
 		}
@@ -151,17 +152,29 @@ function showCorrectRow() {
 		currentRow[i].TEXT = "";
 		// TODO pick some real colors
 		currentRow[i].image_blend = oColorScheme.FOUND_BOMB;
+		currentRow[i].LOCKED = true;
+	}
+}
+
+function recolorPreviousGuesses() {
+	for (var i = 0; i < SLOTS; i++) {
+		if (currentRow[i].image_blend == oColorScheme.CLOSE_DISTANCE || currentRow[i].image_blend == oColorScheme.FAR_DISTANCE) {
+			currentRow[i].image_blend = oColorScheme.LOCKED;
+		}
+		if (currentRow[i].image_index == 3) {
+			currentRow[i].image_index = 0;
+		}
 	}
 }
 
 function reveal(index) {
 	var icon = currentRow[index];
 	icon.REVEALED = true;
-	icon.CONFIRMED = true;
 	if (mineArray[index] == 1) {
 		icon.image_blend = oColorScheme.FOUND_BOMB;
 		icon.image_index = 3;
 	} else {
+		icon.CONFIRMED = true;
 		icon.image_index = 0;
 		// color based on distance
 		if (distanceField[index] <= 2) {
@@ -194,6 +207,7 @@ function goButtonPressed() {
 	} else if (checkNumberOfPokes() == MINES) {
 		oInfoText.showInfoText("");
 		turns++;
+		recolorPreviousGuesses();
 		if (entireRowCorrect()) {
 			showCorrectRow();
 			// hack
@@ -203,7 +217,7 @@ function goButtonPressed() {
 			// first score the existing line
 			scoreCurrentRow()
 			// next  make a new line (or lose)
-			newRowOfButtons();
+			//newRowOfButtons();
 		}
 	} else {
 		oInfoText.showInfoText("Choose exactly " + string(MINES) + " squares.");
