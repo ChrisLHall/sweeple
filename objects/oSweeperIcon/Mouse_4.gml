@@ -2,13 +2,13 @@
 if (!CONFIRMED and !LOCKED) {
 	// clicking a bomb makes it go to poke
 	// otherwise, switch between blank and poke and X
-	if (image_index == 0) {
-		image_index = 2; // poke
-	} else if (image_index == 2) {
-		image_index = 4; // X
-	} else if (image_index == 3) {
-		image_index = 2;
+	if (state == GridState.Blank) {
+		state = GridState.Poke;
+	} else if (state == GridState.Poke) {
+		state = GridState.X;
+	} else if (state == GridState.Bomb) {
+		state = GridState.Poke;
 	} else {
-		image_index = 0;
+		state = GridState.Blank;
 	}
 }

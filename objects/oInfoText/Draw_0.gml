@@ -2,9 +2,14 @@
 draw_set_font(fInfoText);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
-draw_set_color(c_white);
+draw_set_color(c_black);
 
 var pokes = oManager.checkNumberOfPokes();
+var guessText = "";
+if (!oManager.gameFinished) {
+	guessText = "Guess " + string(oManager.turns + 1) + "/6\n";
+}
+
 var mineText = "";
 if (pokes == 0) {
 	mineText = "Find " + string(oManager.MINES) + " mines.";
@@ -15,4 +20,4 @@ if (pokes == 0) {
 } else {
 	mineText = "Select fewer squares."
 }
-draw_text_ext(x, y, mineText + "\n" + infoText, -1, 192);
+draw_text_ext(x, y, guessText + mineText + "\n" + infoText, -1, 192);

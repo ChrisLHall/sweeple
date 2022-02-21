@@ -4,6 +4,7 @@ currentRow = [];
 mineArray = [];
 distanceField = [];
 turns = 0;
+gameFinished = false;
 
 function slotIndexToRow(slotIndex) {
 	return floor(slotIndex / COLS);
@@ -100,7 +101,7 @@ function makeSweeperRow(startX, startY, spacing) {
 function checkNumberOfPokes() {
 	var total = 0;
 	for (var i = 0; i < SLOTS; i++) {
-		if (currentRow[i].image_index == 2) {
+		if (currentRow[i].state == GridState.Poke) {
 			total++;
 		}
 	}
@@ -115,7 +116,7 @@ function checkHardModeRule() {
 	var mostRecentRow = previousRows[array_length(previousRows) - 1];
 	// if there was a bomb there must be a poke
     for (var i = 0; i < SLOTS; i++) {
-		if (mostRecentRow[i].image_index == 3 and currentRow[i].image_index != 2) {
+		if (mostRecentRow[i].state == GridState.Bomb and currentRow[i].state != GridState.Poke) {
 			return false;
 		}
 	}
@@ -128,7 +129,7 @@ function scoreCurrentRow() {
 	for (var i = 0; i < SLOTS; i++) {
 		var icon = currentRow[i];
 		//icon.CONFIRMED = true;
-		if (icon.image_index == 2) {
+		if (icon.state == GridState.Poke) {
 			reveal(i);
 		}
 	}
@@ -138,7 +139,7 @@ function entireRowCorrect() {
 	var allCorrect = true;
 	for (var i = 0; i < SLOTS; i++) {
 		// checking XOR because they need to both be true or both be false
-		if (currentRow[i].image_index == 2 xor mineArray[i] == 1) {
+		if (currentRow[i].state == GridState.Poke xor mineArray[i] == 1) {
 			allCorrect = false;
 			break;
 		}
@@ -148,7 +149,7 @@ function entireRowCorrect() {
 
 function showCorrectRow() {
 	for (var i = 0; i < SLOTS; i++) {
-		currentRow[i].image_index = (mineArray[i] == 1) ? 3 : 0;
+		currentRow[i].state = (mineArray[i] == 1) ? GridState.Bomb : GridState.Blank;
 		currentRow[i].TEXT = "";
 		// TODO pick some real colors
 		currentRow[i].image_blend = oColorScheme.FOUND_BOMB;
@@ -161,8 +162,8 @@ function recolorPreviousGuesses() {
 		if (currentRow[i].image_blend == oColorScheme.CLOSE_DISTANCE || currentRow[i].image_blend == oColorScheme.FAR_DISTANCE) {
 			currentRow[i].image_blend = oColorScheme.LOCKED;
 		}
-		if (currentRow[i].image_index == 3) {
-			currentRow[i].image_index = 0;
+		if (currentRow[i].state == GridState.Bomb) {
+			currentRow[i].state = GridState.Blank;
 		}
 	}
 }
@@ -172,10 +173,10 @@ function reveal(index) {
 	icon.REVEALED = true;
 	if (mineArray[index] == 1) {
 		icon.image_blend = oColorScheme.FOUND_BOMB;
-		icon.image_index = 3;
+		icon.state = GridState.Bomb;
 	} else {
 		icon.CONFIRMED = true;
-		icon.image_index = 0;
+		icon.state = GridState.Blank;
 		// color based on distance
 		if (distanceField[index] <= 2) {
 			icon.image_blend = oColorScheme.CLOSE_DISTANCE;
@@ -209,6 +210,7 @@ function goButtonPressed() {
 		turns++;
 		recolorPreviousGuesses();
 		if (entireRowCorrect()) {
+			gameFinished = true;
 			showCorrectRow();
 			// hack
 			instance_destroy(oGoButton);
@@ -225,7 +227,7 @@ function goButtonPressed() {
 }
 
 function hasGameStarted() {
-	return array_length(previousRows) > 0;
+	return (turns > 0);
 }
 
 // TODO when to randomize

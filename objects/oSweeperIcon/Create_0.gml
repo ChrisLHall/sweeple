@@ -1,3 +1,7 @@
+enum GridState { Blank, Flag, Poke, Bomb, X }
+
+state = GridState.Blank;
+
 /// @description 
 image_speed = 0
 image_blend = oColorScheme.BLANK;
