@@ -4,6 +4,7 @@ currentRow = [];
 mineArray = [];
 distanceField = [];
 turns = 0;
+minesGuessed = [];
 gameFinished = false;
 
 function slotIndexToRow(slotIndex) {
@@ -110,13 +111,12 @@ function checkNumberOfPokes() {
 
 // ensure that if you are playing hard mode, you must click bombs you clicked before
 function checkHardModeRule() {
-	if (!oHardModeCheckBox.HARDMODE or array_length(previousRows) == 0) {
+	if (!oHardModeCheckBox.HARDMODE or turns == 0) {
 		return true;
 	}
-	var mostRecentRow = previousRows[array_length(previousRows) - 1];
 	// if there was a bomb there must be a poke
     for (var i = 0; i < SLOTS; i++) {
-		if (mostRecentRow[i].state == GridState.Bomb and currentRow[i].state != GridState.Poke) {
+		if (minesGuessed[i] == 1 and currentRow[i].state != GridState.Poke) {
 			return false;
 		}
 	}
@@ -174,6 +174,7 @@ function reveal(index) {
 	if (mineArray[index] == 1) {
 		icon.image_blend = oColorScheme.FOUND_BOMB;
 		icon.state = GridState.Bomb;
+		minesGuessed[index] = 1;
 	} else {
 		icon.CONFIRMED = true;
 		icon.state = GridState.Blank;
@@ -189,12 +190,24 @@ function reveal(index) {
 }
 
 // give you at least one non-mine revealed at the start
-function revealRandomNonMine(){
+function revealRandomNonMine() {
 	while (true) {
 		var index = irandom_range(0, SLOTS - 1);
 		if (mineArray[index] == 0) {
 			reveal(index);
 			break;
+		}
+	}
+}
+
+function clearMineIcons() {
+	for (var i = 0; i < SLOTS; i++) {
+		if (currentRow[i].state == GridState.Bomb) {
+			if (oHardModeCheckBox.HARDMODE) {
+				currentRow[i].state = GridState.Poke;
+			} else {
+				currentRow[i].state = GridState.Blank;
+			}
 		}
 	}
 }
@@ -218,6 +231,8 @@ function goButtonPressed() {
 		} else {
 			// first score the existing line
 			scoreCurrentRow()
+			// then remove the bomb icons after a bit
+			alarm_set(0, 60);
 			// next  make a new line (or lose)
 			//newRowOfButtons();
 		}
@@ -240,6 +255,7 @@ MINES = max(2, irandom_range(SLOTS * MIN_DENSITY, SLOTS * MAX_DENSITY));
 
 mineArray = createMineArray(SLOTS, MINES);
 distanceField = createDistanceField(mineArray);
+minesGuessed = array_create(SLOTS, 0);
 newRowOfButtons();
 if (REVEAL_AT_START) {
 	revealRandomNonMine();
