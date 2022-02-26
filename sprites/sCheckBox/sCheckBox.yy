@@ -63,7 +63,7 @@
     "eventToFunction": {},
     "eventStubScript": null,
     "parent": {"name":"sCheckBox","path":"sprites/sCheckBox/sCheckBox.yy",},
-    "resourceVersion": "1.3",
+    "resourceVersion": "1.4",
     "name": "sCheckBox",
     "tags": [],
     "resourceType": "GMSequence",
