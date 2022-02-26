@@ -217,7 +217,7 @@ function clearMineIcons() {
 // TODO maybe force you to poke at least one mine
 function goButtonPressed() {
 	if (!checkHardModeRule()) {
-		oInfoText.showInfoText("In hard mode, you must choose every bomb you found before.");
+		oInfoText.showInfoText("In hard mode, you must choose every bomb you have found.");
 	} else if (checkNumberOfPokes() == MINES) {
 		oInfoText.showInfoText("");
 		turns++;

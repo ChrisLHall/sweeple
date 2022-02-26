@@ -12,12 +12,18 @@ if (!oManager.gameFinished) {
 
 var mineText = "";
 if (pokes == 0) {
-	mineText = "Find " + string(oManager.MINES) + " mines.";
+	mineText = "Find " + string(oManager.MINES) + " bombs.";
 } else if (pokes < oManager.MINES) {
-	mineText = "Select " + string(oManager.MINES - pokes) + " more squares.";
+	var remaining = oManager.MINES - pokes;
+	var squares = (remaining == 1) ? "square." : "squares.";
+	mineText = "Select " + string(oManager.MINES - pokes) + " more " + squares;
 } else if (pokes == oManager.MINES) {
 	mineText = "Press go!";
 } else {
 	mineText = "Select fewer squares."
 }
-draw_text_ext(x, y, guessText + mineText + "\n" + infoText, -1, 192);
+var textToDraw = mineText;
+if (infoText != "") {
+	textToDraw = infoText;
+}
+draw_text_ext(x, y, guessText + textToDraw, -1, 232);
