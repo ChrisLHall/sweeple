@@ -1,4 +1,11 @@
 /// @description 
+if (!variable_global_exists("isDailyChallenge")) {
+	global.isDailyChallenge = true;
+} else {
+	global.isDailyChallenge = false;
+}
+
+
 previousRows = [];
 currentRow = [];
 mineArray = [];
@@ -225,7 +232,7 @@ function clearMineIcons() {
 // TODO maybe force you to poke at least one mine
 function goButtonPressed() {
 	if (!checkHardModeRule()) {
-		oInfoText.showInfoText("In hard mode, you must choose every bomb you have found.");
+		oInfoText.showInfoText("You must choose every bomb already found.");
 	} else if (checkNumberOfPokes() == MINES) {
 		turns++;
 		recolorPreviousGuesses();
@@ -258,8 +265,23 @@ function hasGameStarted() {
 	return (turns > 0);
 }
 
+
 // TODO when to randomize
-randomize();
+//randomize();
+if (global.isDailyChallenge) {
+	// Generate a seed from today's date 
+	var now = date_current_datetime();
+	var day = date_get_day(now);
+	var month = date_get_month(now);
+	var year = date_get_year(now);
+	//literally just use the date as a seed ig?
+	show_debug_message("Daily challenge " + string(year * 10000 + month * 100 + day));
+	random_set_seed(year * 10000 + month * 100 + day);
+} else {
+	randomize();
+}
+
+
 // TODO values
 ROWS = irandom_range(MIN_ROWS, MAX_ROWS);
 COLS = irandom_range(MIN_COLS, MAX_COLS);

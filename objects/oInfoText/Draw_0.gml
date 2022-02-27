@@ -7,6 +7,7 @@ draw_set_color(c_black);
 // Show "Guess N/6. Select M more bombs"
 // If someone shows info text, put that under "Guess N/6" (?)
 // If someone shows permanent text, just show that.
+// If it is the daily challenge, ALWAYS show that on top.
 
 var pokes = oManager.checkNumberOfPokes();
 var guessText = "";
@@ -33,5 +34,12 @@ if (infoText != "") {
 var finalText = guessText + textAfterGuess;
 if (permanentText != "") {
 	finalText = permanentText;
+}
+if (global.isDailyChallenge) {
+	var now = date_current_datetime();
+	var year = date_get_year(now);
+	var month = date_get_month(now);
+	var day = date_get_day(now);
+	finalText = "Daily " + string(year) + "-" + string(month) + "-" + string(day) + "\n" + finalText;
 }
 draw_text_ext(x, y, finalText, -1, 232);
