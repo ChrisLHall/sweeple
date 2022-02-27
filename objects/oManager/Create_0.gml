@@ -151,8 +151,16 @@ function showCorrectRow() {
 	for (var i = 0; i < SLOTS; i++) {
 		currentRow[i].state = (mineArray[i] == 1) ? GridState.Bomb : GridState.Blank;
 		currentRow[i].TEXT = "";
-		// TODO pick some real colors
 		currentRow[i].image_blend = oColorScheme.FOUND_BOMB;
+		currentRow[i].LOCKED = true;
+	}
+}
+
+function showDefeat() {
+	for (var i = 0; i < SLOTS; i++) {
+		currentRow[i].state = GridState.X;
+		currentRow[i].TEXT = "";
+		currentRow[i].image_blend = oColorScheme.LOSE;
 		currentRow[i].LOCKED = true;
 	}
 }
@@ -219,7 +227,6 @@ function goButtonPressed() {
 	if (!checkHardModeRule()) {
 		oInfoText.showInfoText("In hard mode, you must choose every bomb you have found.");
 	} else if (checkNumberOfPokes() == MINES) {
-		oInfoText.showInfoText("");
 		turns++;
 		recolorPreviousGuesses();
 		if (entireRowCorrect()) {
@@ -227,7 +234,13 @@ function goButtonPressed() {
 			showCorrectRow();
 			// hack
 			instance_destroy(oGoButton);
-			oInfoText.showInfoText("Great job! You won in " + string(turns) + " turns.");
+			oInfoText.showPermanentText("Great job! You won in " + string(turns) + " turns.");
+		} else if (turns == 6) {
+			// TODO test
+			gameFinished = true;
+			showDefeat();
+			instance_destroy(oGoButton);
+			oInfoText.showPermanentText("You did not find the bombs in time.");
 		} else {
 			// first score the existing line
 			scoreCurrentRow()

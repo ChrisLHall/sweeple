@@ -4,6 +4,10 @@ draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_color(c_black);
 
+// Show "Guess N/6. Select M more bombs"
+// If someone shows info text, put that under "Guess N/6" (?)
+// If someone shows permanent text, just show that.
+
 var pokes = oManager.checkNumberOfPokes();
 var guessText = "";
 if (!oManager.gameFinished) {
@@ -22,8 +26,12 @@ if (pokes == 0) {
 } else {
 	mineText = "Select fewer squares."
 }
-var textToDraw = mineText;
+var textAfterGuess = mineText;
 if (infoText != "") {
-	textToDraw = infoText;
+	textAfterGuess = infoText;
 }
-draw_text_ext(x, y, guessText + textToDraw, -1, 232);
+var finalText = guessText + textAfterGuess;
+if (permanentText != "") {
+	finalText = permanentText;
+}
+draw_text_ext(x, y, finalText, -1, 232);

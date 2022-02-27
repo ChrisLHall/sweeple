@@ -24,6 +24,7 @@
     {"varType":7,"value":"$FF00FFFF","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"CLOSE_DISTANCE","tags":[],"resourceType":"GMObjectProperty",},
     {"varType":7,"value":"$FF1E8EFF","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"FAR_DISTANCE","tags":[],"resourceType":"GMObjectProperty",},
     {"varType":7,"value":"$FF4C4C4C","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"LOCKED","tags":[],"resourceType":"GMObjectProperty",},
+    {"varType":7,"value":"$FF0000FF","rangeEnabled":false,"rangeMin":0.0,"rangeMax":10.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"LOSE","tags":[],"resourceType":"GMObjectProperty",},
   ],
   "overriddenProperties": [],
   "parent": {
