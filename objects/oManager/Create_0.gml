@@ -13,6 +13,11 @@ distanceField = [];
 turns = 0;
 minesGuessed = [];
 gameFinished = false;
+won = false;
+
+// 2D array. Each time you guess a set of N mines, a list of N guesses is added to this array.
+// Each item in the list is how far that "poke" was from the nearest mine.
+guessHistory = [];
 
 function slotIndexToRow(slotIndex) {
 	return floor(slotIndex / COLS);
@@ -142,6 +147,17 @@ function scoreCurrentRow() {
 	}
 }
 
+function addGuessHistoryEntry() {
+	var thisGuess = [];
+	for (var i = 0; i < SLOTS; i++) {
+		if (currentRow[i].state == GridState.Poke) {
+			array_push(thisGuess, distanceField[i]);
+		}
+	}
+	array_push(guessHistory, thisGuess);
+	show_debug_message(thisGuess);
+}
+
 function entireRowCorrect() {
 	var allCorrect = true;
 	for (var i = 0; i < SLOTS; i++) {
@@ -228,6 +244,20 @@ function clearMineIcons() {
 }
 
 
+function hasGameStarted() {
+	return (turns > 0);
+}
+
+function replaceGoButton() {
+	//var copyButton = instance_create_layer(oGoButton.x, oGoButton.y, oGoButton.layer, oCopyButton);
+	//copyButton.image_xscale = oGoButton.image_xscale;
+	//copyButton.image_yscale = oGoButton.image_yscale;
+	//instance_destroy(oGoButton);
+	instance_deactivate_object(oGoButton);
+	instance_activate_object(oCopyButton);
+	instance_activate_object(oRestartButton);
+}
+
 // called by oGoButton
 // TODO maybe force you to poke at least one mine
 function goButtonPressed() {
@@ -235,18 +265,19 @@ function goButtonPressed() {
 		oInfoText.showInfoText("You must choose every bomb already found.");
 	} else if (checkNumberOfPokes() == MINES) {
 		turns++;
+		addGuessHistoryEntry();
 		recolorPreviousGuesses();
 		if (entireRowCorrect()) {
 			gameFinished = true;
+			won = true;
 			showCorrectRow();
-			// hack
-			instance_destroy(oGoButton);
+			replaceGoButton();
 			oInfoText.showPermanentText("Great job! You won in " + string(turns) + " turns.");
 		} else if (turns == 6) {
 			// TODO test
 			gameFinished = true;
 			showDefeat();
-			instance_destroy(oGoButton);
+			replaceGoButton();
 			oInfoText.showPermanentText("You did not find the bombs in time.");
 		} else {
 			// first score the existing line
@@ -261,9 +292,6 @@ function goButtonPressed() {
 	}
 }
 
-function hasGameStarted() {
-	return (turns > 0);
-}
 
 
 // TODO when to randomize

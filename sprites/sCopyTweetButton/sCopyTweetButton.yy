@@ -8,13 +8,13 @@
   "collisionTolerance": 0,
   "swfPrecision": 2.525,
   "bbox_left": 0,
-  "bbox_right": 31,
+  "bbox_right": 63,
   "bbox_top": 0,
   "bbox_bottom": 15,
   "HTile": false,
   "VTile": false,
   "For3D": false,
-  "width": 32,
+  "width": 64,
   "height": 16,
   "textureGroupId": {
     "name": "Default",
@@ -24,12 +24,12 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"3ae1d4f6-2a51-47b5-afaf-7641778efe7f","path":"sprites/sCheckButton/sCheckButton.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"3ae1d4f6-2a51-47b5-afaf-7641778efe7f","path":"sprites/sCheckButton/sCheckButton.yy",},"LayerId":{"name":"49672c82-68d1-4c1e-b335-da6de5873953","path":"sprites/sCheckButton/sCheckButton.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"sCheckButton","path":"sprites/sCheckButton/sCheckButton.yy",},"resourceVersion":"1.0","name":"3ae1d4f6-2a51-47b5-afaf-7641778efe7f","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"3ae1d4f6-2a51-47b5-afaf-7641778efe7f","path":"sprites/sCopyTweetButton/sCopyTweetButton.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"3ae1d4f6-2a51-47b5-afaf-7641778efe7f","path":"sprites/sCopyTweetButton/sCopyTweetButton.yy",},"LayerId":{"name":"49672c82-68d1-4c1e-b335-da6de5873953","path":"sprites/sCopyTweetButton/sCopyTweetButton.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"sCopyTweetButton","path":"sprites/sCopyTweetButton/sCopyTweetButton.yy",},"resourceVersion":"1.0","name":"3ae1d4f6-2a51-47b5-afaf-7641778efe7f","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
-    "spriteId": {"name":"sCheckButton","path":"sprites/sCheckButton/sCheckButton.yy",},
+    "spriteId": {"name":"sCopyTweetButton","path":"sprites/sCopyTweetButton/sCopyTweetButton.yy",},
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 30.0,
@@ -41,7 +41,7 @@
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"61d66d02-ddba-4c8a-87d1-7d27255d530f","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"3ae1d4f6-2a51-47b5-afaf-7641778efe7f","path":"sprites/sCheckButton/sCheckButton.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"bcd91503-f94e-4164-ab8c-d6e099ceec28","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"3ae1d4f6-2a51-47b5-afaf-7641778efe7f","path":"sprites/sCopyTweetButton/sCopyTweetButton.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
           ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack","modifiers":[],},
     ],
     "visibleRange": null,
@@ -54,13 +54,13 @@
     "backdropHeight": 768,
     "backdropXOffset": 0.0,
     "backdropYOffset": 0.0,
-    "xorigin": 16,
+    "xorigin": 32,
     "yorigin": 0,
     "eventToFunction": {},
     "eventStubScript": null,
-    "parent": {"name":"sCheckButton","path":"sprites/sCheckButton/sCheckButton.yy",},
+    "parent": {"name":"sCopyTweetButton","path":"sprites/sCopyTweetButton/sCopyTweetButton.yy",},
     "resourceVersion": "1.4",
-    "name": "sCheckButton",
+    "name": "sCopyTweetButton",
     "tags": [],
     "resourceType": "GMSequence",
   },
@@ -73,7 +73,7 @@
     "path": "folders/Sprites.yy",
   },
   "resourceVersion": "1.0",
-  "name": "sCheckButton",
+  "name": "sCopyTweetButton",
   "tags": [],
   "resourceType": "GMSprite",
 }
