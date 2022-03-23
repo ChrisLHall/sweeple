@@ -7,8 +7,7 @@ alarm_set(0, 15);
 function createGameString() {
 	var copyString = "#Sweeple https://chrislhall.itch.io/sweeple\n";
 	if (global.isDailyChallenge) {
-		var now = date_current_datetime();
-		copyString += "Daily Challenge " + string(date_get_year(now)) + "-" + string(date_get_month(now)) + "-" + string(date_get_day(now)) + "\n";
+		copyString += "Daily Challenge " + scrTodayString() + "\n";
 	}
 	copyString += string(oManager.COLS) + "x" + string(oManager.ROWS) + " - " + string(oManager.MINES) + " bombs\n";
 	copyString += (oHardModeCheckBox.HARDMODE) ? "*" : "";

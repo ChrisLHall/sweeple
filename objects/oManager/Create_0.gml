@@ -19,6 +19,13 @@ won = false;
 // Each item in the list is how far that "poke" was from the nearest mine.
 guessHistory = [];
 
+// TODO FINISH : Tracking for the daily
+todayDailyFinished = false;
+todayDailyWon = false;
+// guessHistory, recorded when finishing today's daily
+todayDailyGuessHistory = [];
+
+
 function slotIndexToRow(slotIndex) {
 	return floor(slotIndex / COLS);
 }
@@ -287,12 +294,31 @@ function goButtonPressed() {
 			// next  make a new line (or lose)
 			//newRowOfButtons();
 		}
+		
+		if (gameFinished) {
+			if (global.isDailyChallenge) {
+				todayDailyFinished = true;
+				todayDailyWon = won;
+				todayDailyGuessHistory = guessHistory;
+				
+				show_debug_message("FINISHED - SAVING GAME");
+				scrSaveGame();
+			}	
+		}
 	} else {
 		oInfoText.showInfoText("Choose exactly " + string(MINES) + " squares.");
 	}
 }
 
+// TODO TESTINGGGGG
+var arr = scrStringToGuesses("0,5,8,4,4,2;3,0,0,0,0,1;3,5,2,0,1,0");
+show_debug_message(string(arr));
 
+
+if (global.isDailyChallenge) {
+	show_debug_message("LOADING GAME for the daily");
+	scrLoadGame();
+}
 
 // TODO when to randomize
 //randomize();
