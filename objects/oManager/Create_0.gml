@@ -310,18 +310,12 @@ function goButtonPressed() {
 	}
 }
 
-// TODO TESTINGGGGG
-var arr = scrStringToGuesses("0,5,8,4,4,2;3,0,0,0,0,1;3,5,2,0,1,0");
-show_debug_message(string(arr));
-
 
 if (global.isDailyChallenge) {
 	show_debug_message("LOADING GAME for the daily");
 	scrLoadGame();
 }
 
-// TODO when to randomize
-//randomize();
 if (global.isDailyChallenge) {
 	// Generate a seed from today's date 
 	var now = date_current_datetime();
@@ -336,6 +330,7 @@ if (global.isDailyChallenge) {
 }
 
 
+
 // TODO values
 ROWS = irandom_range(MIN_ROWS, MAX_ROWS);
 COLS = irandom_range(MIN_COLS, MAX_COLS);
@@ -348,4 +343,20 @@ minesGuessed = array_create(SLOTS, 0);
 newRowOfButtons();
 if (REVEAL_AT_START) {
 	revealRandomNonMine();
+}
+
+// if the daily challenge has been finished already, show the results
+if (global.isDailyChallenge and todayDailyFinished) {
+	gameFinished = true;
+	won = todayDailyWon;
+	guessHistory = todayDailyGuessHistory;
+	turns = array_length(guessHistory);
+	if (won) {
+		showCorrectRow();
+		oInfoText.showPermanentText("You won in " + string(turns) + " turns.");
+	} else {
+		showDefeat();
+		oInfoText.showPermanentText("You did not find the bombs in time.");
+	}
+	replaceGoButton();
 }

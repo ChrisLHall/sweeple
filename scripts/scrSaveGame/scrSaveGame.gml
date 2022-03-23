@@ -10,7 +10,8 @@ function scrSaveGame(){
 	var save = ds_map_create();
 	ds_map_add(save, "dailyDate", scrTodayString());
 	ds_map_add(save, "dailyWon", oManager.todayDailyWon);
-	ds_map_add_list(save, "dailyGuessHistory", oManager.todayDailyGuessHistory);
+	var guessHistoryString = scrGuessesToString(oManager.todayDailyGuessHistory);
+	ds_map_add(save, "dailyGuessHistory", guessHistoryString);
     
 	var saveString = json_encode(save);
 	ds_map_destroy(save);

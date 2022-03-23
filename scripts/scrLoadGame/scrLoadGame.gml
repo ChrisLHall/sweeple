@@ -15,10 +15,12 @@ function scrLoadGame() {
 	
 	var todayDate = scrTodayString();
 	var saveDate = json[? "dailyDate"];
+	show_debug_message("save date is " + saveDate);
 	if (todayDate == saveDate) {
 		oManager.todayDailyFinished = true;
 		oManager.todayDailyWon = json[? "dailyWon"];
-		oManager.todayDailyGuessHistory = json[? "dailyGuessHistory"];
+		var guessHistoryString = json[? "dailyGuessHistory"];
+		oManager.todayDailyGuessHistory = scrStringToGuesses(guessHistoryString);
 	} else {
 		show_debug_message("No save for today.");
 	}
