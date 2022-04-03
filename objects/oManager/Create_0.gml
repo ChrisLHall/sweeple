@@ -72,7 +72,7 @@ function createMineArray(slots, mineCount) {
 	var result = array_create(slots, 0);
 	mineCount = min(mineCount, slots);
 	while (mineCount > 0) {
-		var randomSlot = irandom_range(0, slots - 1);
+		var randomSlot = oLCGRandom.randomIntRange(0, slots);
 		if (result[randomSlot] == 0) {
 			mineCount--;
 			result[randomSlot] = 1;
@@ -231,7 +231,7 @@ function reveal(index) {
 // give you at least one non-mine revealed at the start
 function revealRandomNonMine() {
 	while (true) {
-		var index = irandom_range(0, SLOTS - 1);
+		var index = oLCGRandom.randomIntRange(0, SLOTS);
 		if (mineArray[index] == 0) {
 			reveal(index);
 			break;
@@ -326,18 +326,18 @@ if (global.isDailyChallenge) {
 	var year = date_get_year(now);
 	//literally just use the date as a seed ig?
 	show_debug_message("Daily challenge " + string(year * 10000 + month * 100 + day));
-	random_set_seed(year * 10000 + month * 100 + day);
+	oLCGRandom.setSeed(year * 10000 + month * 100 + day);
 } else {
-	randomize();
+	oLCGRandom.randomSeed();
 }
 
 
 
 // TODO values
-ROWS = irandom_range(MIN_ROWS, MAX_ROWS);
-COLS = irandom_range(MIN_COLS, MAX_COLS);
+ROWS = oLCGRandom.randomIntRange(MIN_ROWS, MAX_ROWS + 1);
+COLS = oLCGRandom.randomIntRange(MIN_COLS, MAX_COLS + 1);
 SLOTS = ROWS * COLS;
-MINES = max(2, irandom_range(SLOTS * MIN_DENSITY, SLOTS * MAX_DENSITY));
+MINES = max(2, oLCGRandom.randomIntRange(SLOTS * MIN_DENSITY, SLOTS * MAX_DENSITY + 1));
 
 mineArray = createMineArray(SLOTS, MINES);
 distanceField = createDistanceField(mineArray);

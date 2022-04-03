@@ -20,6 +20,7 @@
     {"id":{"name":"sRestartButton","path":"sprites/sRestartButton/sRestartButton.yy",},"order":2,},
     {"id":{"name":"scrTodayString","path":"scripts/scrTodayString/scrTodayString.yy",},"order":1,},
     {"id":{"name":"scrStringToGuesses","path":"scripts/scrStringToGuesses/scrStringToGuesses.yy",},"order":5,},
+    {"id":{"name":"oLCGRandom","path":"objects/oLCGRandom/oLCGRandom.yy",},"order":9,},
     {"id":{"name":"sCopyTweetButton","path":"sprites/sCopyTweetButton/sCopyTweetButton.yy",},"order":4,},
     {"id":{"name":"oInfoText","path":"objects/oInfoText/oInfoText.yy",},"order":4,},
     {"id":{"name":"sweepleRoom","path":"rooms/sweepleRoom/sweepleRoom.yy",},"order":0,},
