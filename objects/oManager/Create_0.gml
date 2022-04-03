@@ -22,6 +22,7 @@ guessHistory = [];
 // TODO FINISH : Tracking for the daily
 todayDailyFinished = false;
 todayDailyWon = false;
+todayDailyHardMode = false;
 // guessHistory, recorded when finishing today's daily
 todayDailyGuessHistory = [];
 
@@ -299,6 +300,7 @@ function goButtonPressed() {
 			if (global.isDailyChallenge) {
 				todayDailyFinished = true;
 				todayDailyWon = won;
+				todayDailyHardMode = oHardModeCheckBox.HARDMODE;
 				todayDailyGuessHistory = guessHistory;
 				
 				show_debug_message("FINISHED - SAVING GAME");
@@ -349,6 +351,8 @@ if (REVEAL_AT_START) {
 if (global.isDailyChallenge and todayDailyFinished) {
 	gameFinished = true;
 	won = todayDailyWon;
+	show_debug_message("loading again ,today daily hard mode " + string(todayDailyHardMode));
+	oHardModeCheckBox.HARDMODE = todayDailyHardMode;
 	guessHistory = todayDailyGuessHistory;
 	turns = array_length(guessHistory);
 	if (won) {

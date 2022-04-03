@@ -10,6 +10,8 @@ function scrSaveGame(){
 	var save = ds_map_create();
 	ds_map_add(save, "dailyDate", scrTodayString());
 	ds_map_add(save, "dailyWon", oManager.todayDailyWon);
+	show_debug_message("hard mode save? " + string(oManager.todayDailyHardMode));
+	ds_map_add(save, "dailyHardMode", oManager.todayDailyHardMode);
 	var guessHistoryString = scrGuessesToString(oManager.todayDailyGuessHistory);
 	ds_map_add(save, "dailyGuessHistory", guessHistoryString);
     

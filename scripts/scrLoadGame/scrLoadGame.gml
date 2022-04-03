@@ -19,6 +19,11 @@ function scrLoadGame() {
 	if (todayDate == saveDate) {
 		oManager.todayDailyFinished = true;
 		oManager.todayDailyWon = json[? "dailyWon"];
+		oManager.todayDailyHardMode = bool(json[? "dailyHardMode"]);
+		show_debug_message("loading daily hard mode " + string(oManager.todayDailyHardMode));
+		show_debug_message(string(true));
+		oHardModeCheckBox.HARDMODE = oManager.todayDailyHardMode;
+		show_debug_message("hard mode is " + string(oHardModeCheckBox.HARDMODE));
 		var guessHistoryString = json[? "dailyGuessHistory"];
 		oManager.todayDailyGuessHistory = scrStringToGuesses(guessHistoryString);
 	} else {
