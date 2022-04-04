@@ -3,6 +3,7 @@
     {"id":{"name":"oSweeperIcon","path":"objects/oSweeperIcon/oSweeperIcon.yy",},"order":0,},
     {"id":{"name":"scrGuessesToString","path":"scripts/scrGuessesToString/scrGuessesToString.yy",},"order":4,},
     {"id":{"name":"scrSaveGame","path":"scripts/scrSaveGame/scrSaveGame.yy",},"order":2,},
+    {"id":{"name":"eSweepleWeb","path":"extensions/eSweepleWeb/eSweepleWeb.yy",},"order":0,},
     {"id":{"name":"oGoButton","path":"objects/oGoButton/oGoButton.yy",},"order":2,},
     {"id":{"name":"sCheckButton","path":"sprites/sCheckButton/sCheckButton.yy",},"order":1,},
     {"id":{"name":"sCheckBox","path":"sprites/sCheckBox/sCheckBox.yy",},"order":3,},

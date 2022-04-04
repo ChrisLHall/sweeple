@@ -1,6 +1,8 @@
 /// @description 
 if (clickable) {
+	//get_string("Copy this text", createGameString());
+	eSweepleWeb_copyText(createGameString());
 	
-	
-	get_string("Copy this text", createGameString());
+	clickable = false;
+	alarm_set(0, 15);
 }
