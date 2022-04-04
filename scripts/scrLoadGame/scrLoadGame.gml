@@ -1,12 +1,12 @@
 // Load game
 // if it is not today's daily, then don't worry about it
 function scrLoadGame() {
-	if (!file_exists("sweepleSave.json")) {
+	if (!file_exists("sweeplesave.txt")) {
 		show_debug_message("No save; as you were");
 		return;
 	}
 	
-	var loadBuffer = buffer_load("sweepleSave.json");
+	var loadBuffer = buffer_load("sweeplesave.txt");
 	var saveString = buffer_read(loadBuffer, buffer_string);
 	buffer_delete(loadBuffer);
 	show_debug_message("LOADED JSON STRING: " + saveString);

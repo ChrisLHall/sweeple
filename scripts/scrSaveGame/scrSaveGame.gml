@@ -21,6 +21,6 @@ function scrSaveGame(){
 	
 	var saveBuffer = buffer_create(string_byte_length(saveString) + 1, buffer_fixed, 1);
 	buffer_write(saveBuffer, buffer_string, saveString);
-	buffer_save(saveBuffer, "sweepleSave.json");
+	buffer_save(saveBuffer, "sweeplesave.txt");
 	buffer_delete(saveBuffer);
 }
